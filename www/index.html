@@ -1327,6 +1327,25 @@ html[data-theme="dark"]:is([data-catset="white"],[data-catset="siamese"],[data-c
 /* 찾기 필터: 카테고리·태그 칩이 위아래로 잘리지 않게 다 펼치기 */
 .filters .frow .chips{max-height:none;overflow:visible;padding:2px 0}
 
+/* ================= v29 ================= */
+/* 로어북 항목: 눌린 칸 대신 살짝 튀어나온 카드로 (안의 글칸은 움푹) */
+.page.detail details.lore{box-shadow:var(--raise-xs);background:var(--bg)}
+.lore-ed{box-shadow:var(--raise-xs)}
+.lore-ed .hlx{box-shadow:var(--inset-sm)}
+.lore-it{box-shadow:var(--raise-xs)}
+/* 로어북 / 월드인포 모아보기: 항목 제목을 누르면 내용이 펼쳐져요 */
+.lore-row2{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;box-shadow:var(--raise-xs);background:var(--bg)}
+.lore-row2.off{opacity:.72}
+.lore-row2 > .ck{padding-top:2px}
+.lr-d{flex:1;min-width:0}
+.lr-d > summary{display:flex;align-items:center;gap:6px;cursor:pointer;list-style:none;min-height:24px}
+.lr-d > summary::-webkit-details-marker{display:none}
+.lr-d > summary .lr-n{font-weight:650;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lr-d > summary::after{content:'';flex:none;margin-left:auto;width:7px;height:7px;border-right:2px solid var(--text-3);border-bottom:2px solid var(--text-3);transform:rotate(45deg);transition:transform .2s}
+.lr-d[open] > summary::after{transform:rotate(-135deg)}
+.lr-d .lr-full{margin-top:8px;font-size:.84rem;line-height:1.6;color:var(--text-2);white-space:pre-wrap;word-break:break-word}
+.lem .nai-ents{max-height:none}
+
 </style>
 </head>
 <body>
@@ -4359,6 +4378,7 @@ async function copyEntry(e, { asAlt = false, label = '' } = {}) {
 /* ================= 탭 이동: 하던 화면 그대로 돌아가기 ================= */
 async function onHash() {
   if (ignoreHash) { ignoreHash = false; return; }
+  if (NAV_SILENT) return;   // 탭을 바꾸며 기록을 되돌리는 중간 단계는 그리지 않아요
   const target = location.hash || '#/'; const from = lastHash || '#/';
   const prevR = parseRoute(from), r = parseRoute(target);
   const viaTab = S.viaTab; S.viaTab = false;
@@ -4395,7 +4415,7 @@ document.addEventListener('click', (ev) => {
   } else target = S.tabLast[tab] || TAB_ROOT[tab];
   S.viaTab = true; S.pendingTab = tab;
   if ((location.hash || '#/') === target) { S.viaTab = false; S.curTab = tab; return; }
-  location.hash = target;
+  S.viaTab = false; goTab(tab, target);   // 탭을 바꾸면 기록을 처음으로 (일반 앱처럼)
 }, true);
 
 /* ================= 홈 윗부분: 두 줄로 정리 ================= */
@@ -6609,7 +6629,8 @@ if (isNativeApp()) {
     const root = $('#modal-root'); const top = root?.lastElementChild;
     if (top) { top.querySelector('[data-close]')?.click(); return; }
     if ($('#popover')) { closePop(); return; }
-    if (canGoBack || (location.hash && location.hash !== '#/')) history.back();
+    if (histDepth() > 0) history.back();
+    else if ((location.hash || '#/') !== '#/') goTab('all', '#/');   // 다른 탭의 첫 화면에서는 홈으로
     else window.Capacitor.Plugins.App.exitApp();
   });
 }
@@ -6764,7 +6785,7 @@ const _runDraw19 = runDraw;
 runDraw = async function () { await _runDraw19(); $$('#stage .dcard.flip').forEach((d) => d.classList.add('done')); };
 
 /* ================= v20 ================= */
-const APP_VERSION = 'v28';
+const APP_VERSION = 'v29';
 Object.assign(IC, { save: '<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/>' });
 
 /* 브라우저가 저장 공간이 모자랄 때 카드 데이터를 지우지 않게 (지원하는 곳에서만) */
@@ -7448,6 +7469,139 @@ for (const k of CAT_KEYS) {
   Object.defineProperty(DD, k, { configurable: true, enumerable: true,
     get() { const b = DD_BASE[k]; return typeof b === 'string' && /ny(?:Arm|Clip)_/.test(b) ? uniqSvgIds(b) : b; },
     set(v) { DD_BASE[k] = v; } });
+}
+
+/* ================= v29 ================= */
+
+/* ---------- 상세보기 로어북: 번역/원문 전환해도 펼친 항목이 접히지 않게 ---------- */
+document.addEventListener('click', (ev) => { if (ev.target.closest('summary [data-act="flip"], summary [data-act="trEdit"], summary .edb')) ev.preventDefault(); }, true);   // 제목줄 안 버튼은 접기/펴기를 하지 않아요
+const _flip29 = ACT.flip;
+ACT.flip = (el) => {
+  const open = new Set(); $$('.page.detail details.lore').forEach((d, i) => { if (d.open) open.add(i); });
+  const y = window.scrollY; _flip29(el);
+  requestAnimationFrame(() => { $$('.page.detail details.lore').forEach((d, i) => { if (open.has(i)) d.open = true; }); window.scrollTo(0, y); });
+};
+
+/* ---------- 로어북 / 월드인포 모아보기 ---------- */
+LORE_SRC_LABEL.st = '실리태번 월드인포';
+S.lore.openItem = S.lore.openItem || new Set();
+const LGRP = [['all', '전체'], ['general', '월드인포'], ['nai', 'NovelAI']];
+viewLore = function () {
+  const L = S.lore; const all = loreBooks(); const g = L.grp || 'all';
+  const books = g === 'all' ? all : all.filter((b) => b.grp === g);
+  const q = L.q.trim().toLowerCase();
+  const hit = (b, x) => !q || [b.name, x.name, x.text, ...x.keys].some((s) => String(s).toLowerCase().includes(q));
+  const total = books.reduce((n, b) => n + b.items.length, 0); const y = window.scrollY;
+  const cnt = (k) => (k === 'all' ? all.length : all.filter((b) => b.grp === k).length);
+  const selGroups = new Set([...L.sel].map((k) => all.find((b) => b.id === k.split('|')[0])?.grp).filter(Boolean));
+  main.innerHTML = `<div class="page lore-page">
+    <header class="topbar sticky"><button class="btn icon" data-act="back" aria-label="뒤로">${icon('back')}</button><h1 class="tb-title">로어북 / 월드인포 모아보기<small>${books.length}개 · 항목 ${total}개</small></h1></header>
+    <div class="seg full lore-grp" data-lgrp>${LGRP.map(([k, l]) => `<button class="${g === k ? 'on' : ''}" data-v="${k}">${l}<small> ${cnt(k)}</small></button>`).join('')}</div>
+    <label class="search neu-in">${icon('search')}<input id="loreQ" type="search" placeholder="${g === 'nai' ? 'NovelAI 로어북에서 찾기' : g === 'general' ? '실리태번 월드인포에서 찾기' : '이름, 키워드, 내용으로 찾기'}" value="${esc(L.q)}" autocomplete="off"></label>
+    ${books.length ? '' : `<div class="empty-state">${DD.catBook}<h2>아직 없어요</h2><p>로어북이 든 캐릭터 카드, 실리태번 월드인포, NovelAI 로어북·시나리오를 가져오면 여기에 모여요.</p></div>`}
+    ${books.map((b) => {
+      const its = b.items.map((x, i) => ({ x, i })).filter(({ x }) => hit(b, x)); if (q && !its.length) return '';
+      const open = q || L.open.has(b.id); const allSel = b.items.length && b.items.every((_, i) => L.sel.has(`${b.id}|${i}`));
+      return `<section class="esec neu lore-book ${open ? 'open' : ''}" data-bid="${b.id}">
+        <div class="lb-head"><label class="ck"><input type="checkbox" data-lsel-book="${b.id}" ${allSel ? 'checked' : ''} aria-label="이 로어북 전체 고르기"></label>
+          <button class="lb-title" data-act="loreToggle" data-id="${b.id}"><b>${esc(b.name)}</b><small>${esc(b.src)} · ${b.items.length}개</small></button>
+          <button class="btn icon sm ghost" data-act="loreEditBook" data-id="${b.id}" aria-label="편집" title="편집">${icon('edit')}</button>
+          <a class="btn icon sm ghost" href="#/e/${b.id}" aria-label="열기" title="열기">${icon('chevR')}</a>
+          <button class="btn icon sm ghost" data-act="loreDelBook" data-id="${b.id}" aria-label="이 로어북 지우기" title="이 로어북 지우기">${icon('trash')}</button></div>
+        ${open ? `<div class="lore-its">${its.map(({ x, i }) => { const k = `${b.id}|${i}`; return `<div class="lore-row2 ${x.enabled ? '' : 'off'}">
+            <label class="ck"><input type="checkbox" data-lsel="${k}" ${L.sel.has(k) ? 'checked' : ''} aria-label="고르기"></label>
+            <details class="lr-d" data-ok="${k}" ${L.openItem.has(k) || (q && x.text.toLowerCase().includes(q)) ? 'open' : ''}><summary><span class="lr-n">${esc(x.name || x.keys[0] || '이름 없는 항목')}</span>${x.force ? '<span class="lflag on">항상</span>' : ''}${x.enabled ? '' : '<span class="lflag">꺼짐</span>'}</summary>
+              ${x.keys.length ? `<div class="lkeys">${x.keys.map((kk) => `<span class="chip plain">${esc(kk)}</span>`).join('')}</div>` : ''}<div class="lr-full">${esc(x.text) || '<span class="hint">내용 없음</span>'}</div></details></div>`; }).join('')}</div>` : ''}
+      </section>`;
+    }).join('')}
+    <div class="lore-bar ${L.sel.size ? 'show' : ''}"><span>${L.sel.size}개 고름</span>
+      <button class="btn icon sm ghost" data-act="loreClear" aria-label="고르기 풀기" title="고르기 풀기">${icon('close')}</button>
+      <button class="btn icon sm" data-act="loreDelSel" aria-label="고른 항목 지우기" title="고른 항목 지우기">${icon('trash')}</button>
+      ${!selGroups.size || selGroups.has('general') ? `<button class="btn sm primary" data-act="loreExportWI">${icon('download')} 월드인포로 받기</button>` : ''}
+      ${selGroups.has('nai') ? `<button class="btn sm ${selGroups.has('general') ? '' : 'primary'}" data-act="loreExport">${icon('download')} NovelAI 로어북으로 받기</button>` : ''}</div>
+  </div>`;
+  const qi = $('#loreQ'); qi.addEventListener('input', debounce(() => { L.q = qi.value; const pos = qi.selectionStart; viewLore(); const n = $('#loreQ'); n.focus(); try { n.setSelectionRange(pos, pos); } catch {} }, 250));
+  requestAnimationFrame(() => window.scrollTo(0, y));
+};
+document.addEventListener('toggle', (ev) => { const d = ev.target; if (!d.matches?.('details.lr-d')) return; d.open ? S.lore.openItem.add(d.dataset.ok) : S.lore.openItem.delete(d.dataset.ok); }, true);
+
+/* 실리태번 월드인포 파일 만들기 */
+function wiEntry(x, i) {
+  const st = x._ref?._st || {}; const ref = x._ref || {};
+  return { uid: i, key: [...x.keys], keysecondary: st.keysecondary || ref.secondary_keys || [], comment: x.name || '', content: x.text || '', constant: !!x.force, vectorized: false, selective: true, selectiveLogic: 0, addMemo: true,
+    order: st.order ?? ref.insertion_order ?? 100, position: st.position ?? 0, disable: !x.enabled, excludeRecursion: false, preventRecursion: false, delayUntilRecursion: false,
+    probability: 100, useProbability: true, depth: st.depth ?? 4, group: st.group || '', groupOverride: false, groupWeight: 100, scanDepth: null, caseSensitive: null, matchWholeWords: null,
+    useGroupScoring: null, automationId: '', role: null, sticky: 0, cooldown: 0, delay: 0, ...st, ...{ uid: i, key: [...x.keys], comment: x.name || '', content: x.text || '', constant: !!x.force, disable: !x.enabled, displayIndex: i } };
+}
+async function loreExportWI() {
+  const books = loreBooks(); const picks = [];
+  for (const k of S.lore.sel) { const [bid, i] = k.split('|'); const b = books.find((x) => x.id === bid); const x = b?.items[+i]; if (x) picks.push({ b, x }); }
+  if (!picks.length) return toast('고른 항목이 없어요');
+  const one = new Set(picks.map((p) => p.b.id)).size === 1;
+  const name = (await promptDlg('월드인포 파일 이름', one ? picks[0].b.name : '월드인포 모음'))?.trim(); if (!name) return;
+  const entries = {}; picks.forEach(({ x }, i) => { entries[i] = wiEntry(x, i); });
+  download(new Blob([JSON.stringify({ entries }, null, 2)], { type: 'application/json' }), fileSafe(name) + '.json');
+  toast(`항목 ${picks.length}개를 월드인포 파일로 받았어요`);
+}
+
+/* 모아보기에서 바로 편집 (캐릭터 카드 로어북·월드인포·NovelAI 모두) */
+function leRender() {
+  const L = S.loreEdit; if (!L) return;
+  if (L.modal) { const box = L.m?.el.querySelector('[data-lem]'); if (box) box.innerHTML = loreEditHTML(L); }
+  else viewNaiItem(S.byId.get(L.id));
+}
+function openLoreEditModal(id) {
+  const e = S.byId.get(id); if (!e) return;
+  const b = loreBooks().find((x) => x.id === id);
+  S.loreEdit = { id, items: loreItemsOf(e).map((x) => ({ ...x, keys: [...x.keys] })), sel: new Set(), dirty: false, modal: true };
+  const L = S.loreEdit;
+  L.m = openModal({ title: `${b ? b.name : entryName(e)} 편집`, wide: true, body: '<div data-lem class="lem"></div>', foot: `<button class="btn primary" data-act="leSave">${icon('check')} 저장</button>`,
+    onClose: () => { if (S.loreEdit === L) S.loreEdit = null; } });
+  leRender();
+}
+Object.assign(ACT, {
+  loreExportWI: () => loreExportWI(),
+  loreEditBook: (el) => openLoreEditModal(el.dataset.id),
+  leAdd: () => { const L = S.loreEdit; if (!L) return; L.items.push({ name: '새 항목', keys: [], text: '', enabled: true, force: false }); L.dirty = true; leRender(); },
+  leDelSel: async () => {
+    const L = S.loreEdit; if (!L?.sel.size) return;
+    if (!(await confirmDlg(`고른 항목 ${L.sel.size}개를 지울까요? 저장을 눌러야 실제로 지워져요.`, { ok: '지우기', danger: true }))) return;
+    L.items = L.items.filter((_, i) => !L.sel.has(i)); L.sel.clear(); L.dirty = true; leRender();
+  },
+  leSave: async () => {
+    const L = S.loreEdit; if (!L) return; const e = S.byId.get(L.id);
+    await lorePut(e, L.items); S.loreEdit = null;
+    if (L.modal) { L.m.close(); viewLore(); } else viewNaiItem(e);
+    toast('로어북을 저장했어요');
+  },
+});
+
+/* ---------- 뒤로 가기: 일반 앱처럼 (탭을 바꾸면 기록을 처음으로 되돌려요) ---------- */
+var NAV_SILENT = false;
+const histDepth = () => (history.state && history.state.sid === APP_SID && typeof history.state.nd === 'number' ? history.state.nd : 0);
+let lastNavDepth = 0, FORCE_ND = null;
+const APP_SID = Math.random().toString(36).slice(2);   // 이 앱 실행에서 만든 기록인지 알아보는 표시
+try { history.replaceState({ ...(history.state || {}), nd: 0, sid: APP_SID }, ''); } catch {}
+window.addEventListener('hashchange', () => {
+  try {
+    if (FORCE_ND != null) { history.replaceState({ nd: FORCE_ND, sid: APP_SID }, ''); FORCE_ND = null; }      // 바꿔치기: 깊이 그대로
+    else if (!history.state || typeof history.state.nd !== 'number' || history.state.sid !== APP_SID) history.replaceState({ nd: lastNavDepth + 1, sid: APP_SID }, '');   // 새 화면: 한 칸 깊게
+  } catch {}
+  lastNavDepth = histDepth();
+});
+function replaceHash(h) { FORCE_ND = histDepth(); location.replace(h); }   // 기록을 늘리지 않고 주소만 바꾸기
+const waitEv = (type, ms = 80) => new Promise((res) => { let done = false; const fin = () => { if (!done) { done = true; setTimeout(res, 20); } }; window.addEventListener(type, fin, { once: true }); setTimeout(fin, ms + 400); });
+async function goTab(tab, target) {
+  const root = TAB_ROOT[tab] || '#/';
+  if (parseRoute(location.hash || '#/').v === 'edit' && S.ed?.dirty) S.drafts[S.ed.id] = S.ed;   // 편집 중이던 내용은 그대로 보관
+  const d = histDepth();
+  if (d > 0 && d < history.length) { NAV_SILENT = true; const w = waitEv('popstate'); history.go(-d); await w; await new Promise((r) => setTimeout(r, 60)); }
+  if (target !== root && (location.hash || '#/') !== root) { NAV_SILENT = true; const w = waitEv('hashchange'); replaceHash(root); await w; }
+  NAV_SILENT = false; S.viaTab = true; S.pendingTab = tab;
+  if (target === root) {
+    S.hstack = [];
+    if ((location.hash || '#/') !== root) replaceHash(root); else onHash();
+  } else { S.hstack = [root]; location.hash = target; }
 }
 
 document.getElementById('dragCat').innerHTML = DD.catBox;
