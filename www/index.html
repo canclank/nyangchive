@@ -1346,6 +1346,101 @@ html[data-theme="dark"]:is([data-catset="white"],[data-catset="siamese"],[data-c
 .lr-d .lr-full{margin-top:8px;font-size:.84rem;line-height:1.6;color:var(--text-2);white-space:pre-wrap;word-break:break-word}
 .lem .nai-ents{max-height:none}
 
+/* ================= v30 ================= */
+/* 고르기 창: 폴더로 골라 보기, 안 고른 칸은 빈 칸으로만 */
+.pick-top{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.pick-top .search{flex:1;min-width:0;margin:0}
+.pick-top .sel{flex:none;max-width:44%}
+.pick-item:not(.on) .ck-mark{background:var(--bg);box-shadow:var(--inset-sm);color:transparent}
+.pick-item:not(.on) .ck-mark .ic{opacity:0}
+/* 로어북 / 월드인포 모아보기 */
+.lore-page .topbar .tb-actions{margin-left:auto;display:flex;gap:6px}
+.lore-row2{padding-right:16px}
+.lr-d > summary::after{margin-right:2px}
+.lr-d .lkeys{margin-top:8px}
+.lr-d .lr-full{margin-top:6px}
+.lflag.tr{background:var(--accent-soft);color:var(--accent-text)}
+/* 로어북 편집: 항목마다 접고 펴기 */
+.le-tools{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.le-tools .hint{flex:1;min-width:0;margin:0;font-size:.8rem}
+.nai-ents.le-list{display:flex;flex-direction:column;gap:10px;box-shadow:none;background:none;padding:2px;max-height:none;overflow:visible}
+.le-ent{padding:10px 12px;border-radius:14px;box-shadow:var(--raise-xs)!important;background:var(--bg)}
+.le-h{display:flex;align-items:center;gap:8px}
+.le-h .ck{flex:none;margin:0}
+.le-h .nai-in{flex:1;min-width:0}
+.le-b{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.le-sum{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;width:100%;margin-top:6px;padding:0 2px;background:none;border:0;text-align:left;font:inherit;font-size:.78rem;color:var(--text-3);cursor:pointer}
+.le-sum .le-s2{flex-basis:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.le-h{width:100%}
+.le-h .nai-in{flex:1 1 auto;width:auto;max-width:none}
+
+/* ================= v31 ================= */
+/* 튀어나온 디자인: 밝은 쪽 가장자리에 하이라이트 살짝 (설정 맨 위 폴더 탭은 그대로) */
+:root{--sh-hl:rgba(255,255,255,.62)}
+html[data-theme="dark"]{--sh-hl:rgba(255,255,255,.055)}
+html,html[data-theme]{--raise:7px 7px 16px var(--sh-d),-4px -4px 11px var(--sh-l),inset 1px 1px 0 var(--sh-hl);--raise-sm:4px 4px 9px var(--sh-d),-2px -2px 6px var(--sh-l),inset 1px 1px 0 var(--sh-hl);--raise-xs:2px 2px 5px var(--sh-d),-1px -1px 4px var(--sh-l),inset 1px 1px 0 var(--sh-hl)}
+.set-tabs.idx{--raise:7px 7px 16px var(--sh-d),-4px -4px 11px var(--sh-l);--raise-sm:4px 4px 9px var(--sh-d),-2px -2px 6px var(--sh-l);--raise-xs:2px 2px 5px var(--sh-d),-1px -1px 4px var(--sh-l)}
+/* 상세보기 태그 칸: 칩 위아래가 잘리지 않게 */
+.box.tagbox{max-height:none;overflow:visible;padding-top:3px;padding-bottom:3px}
+/* 모아보기 검색어 형광펜 */
+mark.qhl{background:color-mix(in srgb,var(--accent) 32%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+/* 고르기 창: 태그·폴더 버튼, 항목 좌우 여백 */
+.pick-top .btn.icon{flex:none}
+.pick-top .btn.icon.on{color:var(--accent-text);box-shadow:var(--inset-sm)}
+.pick-f{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 10px}
+.pick-f .chip .ic{width:14px;height:14px;margin-right:3px}
+.pick-item{padding-left:16px;padding-right:16px}
+/* 실리태번 월드인포 편집 칸 */
+.st-b{gap:10px}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px 10px}
+.stf{display:flex;flex-direction:column;gap:4px;font-size:.78rem;font-weight:650;color:var(--text-2);min-width:0}
+.stf small{font-weight:500;color:var(--text-3);font-size:.68rem}
+.stf .inp,.stf .sel{width:100%;min-width:0}
+.stf.wide,.stf.grow{grid-column:1/-1}
+.st-adv{margin-top:2px}
+.st-adv > summary{cursor:pointer;font-size:.8rem;font-weight:650;color:var(--text-3);padding:4px 0}
+.st-adv[open] > summary{margin-bottom:8px}
+.st-flags{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.st-flags small{color:var(--text-3);font-size:.68rem;margin-left:4px}
+.st-tag{font-weight:650;color:var(--text-2)}
+#popover,.popover{z-index:2147483000}
+
+/* ================= v32 ================= */
+/* 상세보기 태그 칸: 여러 줄이어도 맨 아래 칩이 칸에 붙지 않게, 칩 글자는 정가운데 */
+.box.tagbox{padding:10px 12px;gap:8px}
+.chip{line-height:1.25;justify-content:center}
+/* 프로필 사진 가리기 글자 조금 작게 */
+.blur-lab{font-size:.86rem}
+.blur-lab .hint{font-size:.74rem}
+/* 월드인포 편집 화면 */
+.wi-edit .esec + .esec{margin-top:12px}
+
+/* 편집 › 카드 내용 머리줄: 제목·토큰 합계·HTML 정리 버튼을 한 줄에 */
+#ed-card > .sec-h{flex-wrap:nowrap;gap:6px;align-items:center}
+#ed-card > .sec-h h3{flex:none;white-space:nowrap}
+#ed-card > .sec-h .tok-sum{flex:none;margin-left:2px;white-space:nowrap}
+#ed-card > .sec-h [data-act="stripOpen"]{margin-left:auto;flex:none;padding-left:10px;padding-right:12px;white-space:nowrap}
+#ed-card > .sec-h{gap:4px}
+#ed-card > .sec-h .tok-sum{font-size:.7rem}
+#ed-card > .sec-h [data-act="stripOpen"]{padding:6px 9px;gap:4px;font-size:.8rem}
+#ed-card > .sec-h [data-act="stripOpen"] .ic{width:15px;height:15px}
+@media (max-width:350px){#ed-card > .sec-h .tok-sum{display:none}}
+
+/* ================= v33 ================= */
+/* 하이라이트: 딱딱한 선 대신 살짝 번진 빛으로 */
+:root{--sh-hl:rgba(255,255,255,.5)}
+html[data-theme="dark"]{--sh-hl:rgba(255,255,255,.04)}
+html,html[data-theme]{--raise:7px 7px 16px var(--sh-d),-4px -4px 11px var(--sh-l),inset 1px 1px 2px var(--sh-hl);--raise-sm:4px 4px 9px var(--sh-d),-2px -2px 6px var(--sh-l),inset 1px 1px 2px var(--sh-hl);--raise-xs:2px 2px 5px var(--sh-d),-1px -1px 4px var(--sh-l),inset 1px 1px 2px var(--sh-hl)}
+/* 색이 칠해진 곳(강조 버튼·+ 버튼·색 팔레트·토글·색 태그)은 하이라이트 넣기 전 그대로 */
+.btn.primary,.btn.danger,.bnav .plus,.sw,.switch,.chip[style*="--c"],.chip.preset,.chip.sel,.lflag,.set-tabs.idx{--raise:7px 7px 16px var(--sh-d),-4px -4px 11px var(--sh-l);--raise-sm:4px 4px 9px var(--sh-d),-2px -2px 6px var(--sh-l);--raise-xs:2px 2px 5px var(--sh-d),-1px -1px 4px var(--sh-l),inset 1px 1px 0 var(--sh-rim)}
+/* 편집 › 자주 쓰는 태그: 칩 아래가 잘리지 않게 다 펼치기 */
+#ed-tags .presets{max-height:none;overflow:visible;padding:2px 0 4px}
+/* 편집 › 카드 로어북 항목: 실리태번 설정 */
+.cst{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:10px}
+.cst-h{font-size:.78rem;font-weight:700;color:var(--text-3)}
+/* v34: 색이 칠해진 곳은 왼쪽 위 하이라이트(안쪽 흰 선·바깥 흰빛) 모두 없이, 오른쪽 아래 그림자만 */
+.btn.primary,.btn.danger,.bnav .plus,.sw,.switch,.chip[style*="--c"],.chip.preset,.chip.sel,.lflag,button.chip.f.sel{--raise:7px 7px 16px var(--sh-d);--raise-sm:4px 4px 9px var(--sh-d);--raise-xs:2px 2px 5px var(--sh-d)}
+
 </style>
 </head>
 <body>
@@ -2692,7 +2787,7 @@ function avaEditorHTML(e) {
     <span class="av-label" data-act="avLabel" data-id="${e.id}" data-a="${a.id}" title="${a.original ? '오리지널' : '눌러서 이름 바꾸기'}">${a.original ? '<b class="orig">오리지널</b>' : esc(a.label)}${a.id === e.activeAvatar ? ' · 사용 중' : ''}</span>
     <div class="av-act"><button class="btn icon sm" data-act="avSave" data-id="${e.id}" data-a="${a.id}" aria-label="사진 저장" title="사진 저장">${icon('download')}</button><button class="btn icon sm" data-act="avDel" data-id="${e.id}" data-a="${a.id}" aria-label="사진 삭제" title="사진 삭제">${icon('trash')}</button></div></div>`).join('')}
     <button class="av-add" data-act="avAdd" data-id="${e.id}">${icon('image')}<span>사진 추가</span></button></div>
-    <div class="row"><label class="switch"><input type="checkbox" data-chg="blur" data-id="${e.id}" ${e.blur ? 'checked' : ''}><span></span></label><span>프로필 사진 가리기<br><span class="hint">지금은 ${S.settings.blurScope === 'all' ? '목록과 상세보기 모두' : '목록·홈에서만'} 가려요. 범위는 설정에서 바꿀 수 있어요.</span></span></div>`;
+    <div class="row"><label class="switch"><input type="checkbox" data-chg="blur" data-id="${e.id}" ${e.blur ? 'checked' : ''}><span></span></label><span class="blur-lab">프로필 사진 가리기<br><span class="hint">지금은 ${S.settings.blurScope === 'all' ? '목록과 상세보기 모두' : '목록·홈에서만'} 가려요. 범위는 설정에서 바꿀 수 있어요.</span></span></div>`;
 }
 function tagAreaHTML() {
   const M = S.ed.M;
@@ -2710,7 +2805,7 @@ function metaEditorHTML() {
 }
 function cardEditorHTML(e) {
   const isChar = e.kind === 'character';
-  let h = secHead(isChar ? '카드 내용' : '페르소나 내용', '', `<button class="btn sm" data-act="stripOpen" title="&lt;div style=…&gt;처럼 HTML로 꾸며 놓은 부분 지우기">${icon('wand')} HTML 꾸미기 지우기</button>`) + hlField({ path: 'name', label: '이름', kind: 'line' });
+  let h = secHead(isChar ? '카드 내용' : '페르소나 내용', '', `<button class="btn sm" data-act="stripOpen" title="&lt;div style=…&gt;처럼 HTML로 꾸며 놓은 부분 지우기">${icon('wand')} HTML 정리</button>`) + hlField({ path: 'name', label: '이름', kind: 'line' });
   if (isChar) h += hlField({ path: 'nickname', label: '별명', sub: 'V3', kind: 'line', group: 'other' });
   h += hlField({ path: 'description', label: isChar ? '설명' : '페르소나 설명', sub: 'Description', rows: 6 });
   if (isChar) {
@@ -3791,7 +3886,7 @@ function applyAutoProfile(e, d = e.data, target = e) {
 }
 function pfHTML() {
   const M = S.ed.M;
-  return `<div class="lab">프로필<small>설명에서 자동으로 채우고, 직접 고칠 수 있어요</small><span class="sp"></span><a class="btn sm ghost" href="#/settings">항목 설정</a><button class="btn sm" data-act="pfReextract">${icon('wand')} 다시 추출</button></div>
+  return `<div class="lab">프로필<small>설명에서 자동으로 채우고, 직접 고칠 수 있어요</small><span class="sp"></span><a class="btn sm" href="#/settings">항목 설정</a><button class="btn sm" data-act="pfReextract">${icon('wand')} 다시 추출</button></div>
     <div class="pf-edit">${pfFields().map((f) => `<label class="pf-in"><span>${esc(f.label)}${M.profileManual[f.k] ? '<i class="man">직접 입력</i>' : '<i>자동</i>'}</span><input class="inp sm" data-pf="${esc(f.k)}" value="${esc(M.profile[f.k] || '')}"></label>`).join('')}</div>`;
 }
 async function refillProfiles() { for (const e of S.entries) { const b = JSON.stringify(e.profile); applyAutoProfile(e); if (JSON.stringify(e.profile) !== b) await Store.save(e, false); } }
@@ -4503,10 +4598,10 @@ function viewSettings() {
       <div class="set-row"><span>같은 이름 카드 묶어 보기<small>이름이 같은 카드를 목록에서 한 칸에 겹쳐 보여줘요</small></span>${swHTML('groupSameName')}</div>
       <div class="set-row"><span>가져올 때 카드에 든 태그를 내 태그로 복사</span>${swHTML('importCardTags')}</div>
     </section>
-    <section class="esec neu">${secHead('HTML 꾸미기', '&lt;div style=…&gt;처럼 HTML로 꾸며 놓은 부분')}
-      <div class="set-row"><span>보기에서 HTML 꾸미기 숨기기<small>상세보기에서 HTML로 꾸며 놓은 부분을 통째로 감춰요. 카드 내용은 그대로예요</small></span>${swHTML('stripHtmlView')}</div>
-      <div class="set-row"><span>가져올 때 HTML 꾸미기 지우기<small>새로 가져오는 카드에서 꾸민 부분을 통째로 지워요. 원본은 그대로 보관돼요</small></span>${swHTML('stripHtmlImport')}</div>
-      <p class="note">이미 가져온 카드는 편집 화면의 "HTML 꾸미기 지우기"로 지울 수 있어요.</p>
+    <section class="esec neu">${secHead('HTML 정리', '&lt;div style=…&gt;처럼 HTML로 꾸며 놓은 부분')}
+      <div class="set-row"><span>보기에서 HTML 숨기기<small>상세보기에서 HTML로 꾸며 놓은 부분을 통째로 감춰요. 카드 내용은 그대로예요</small></span>${swHTML('stripHtmlView')}</div>
+      <div class="set-row"><span>가져올 때 HTML 정리<small>새로 가져오는 카드에서 꾸민 부분을 통째로 지워요. 원본은 그대로 보관돼요</small></span>${swHTML('stripHtmlImport')}</div>
+      <p class="note">이미 가져온 카드는 편집 화면의 "HTML 정리"로 지울 수 있어요.</p>
     </section>
     <section class="esec neu" id="pfSec">${pfSectionHTML()}</section>`;
   else if (tab === 'tags') body = `<section class="esec neu" id="tagSec">${tagsSectionHTML()}</section><section class="esec neu" id="genreSec">${genreSectionHTML()}</section>`;
@@ -4723,6 +4818,10 @@ function popMenu(anchor, items, cur, onPick) {
   document.body.appendChild(pop);
   const r = anchor.getBoundingClientRect(); const pw = pop.offsetWidth;
   pop.style.top = r.bottom + 8 + 'px'; pop.style.left = Math.max(8, Math.min(window.innerWidth - pw - 8, r.left + r.width / 2 - pw / 2)) + 'px';
+  { const below = window.innerHeight - r.bottom - 16, above = r.top - 16, h = pop.offsetHeight;   // 화면 밖으로 넘치지 않게: 아래가 모자라면 위로, 그래도 길면 안에서 스크롤
+    if (h > below && above > below) { const mh = Math.min(h, above); pop.style.maxHeight = mh + 'px'; pop.style.top = Math.max(8, r.top - 8 - mh) + 'px'; }
+    else if (h > below) pop.style.maxHeight = Math.max(120, below) + 'px';
+    pop.style.overflowY = 'auto'; }
   pop.addEventListener('click', (ev) => { const b = ev.target.closest('[data-pv]'); if (!b) return; closePop(); onPick(b.dataset.pv); });
   setTimeout(() => document.addEventListener('pointerdown', outsidePop2, true));
 }
@@ -4744,7 +4843,7 @@ Object.assign(ACT, {
 });
 
 /* ================= v6: 기본값 ================= */
-Object.assign(DEFAULT_SETTINGS, { catSet: 'basic', stripHtmlView: true, stripHtmlImport: false });
+Object.assign(DEFAULT_SETTINGS, { catSet: 'basic', stripHtmlView: false, stripHtmlImport: false });
 
 /* ================= 선 그림 뒤를 채우는 실루엣 (몸이 비치지 않게) =================
    그림을 한 번 그려서 바깥쪽만 칠해 보고, 칠해지지 않은 부분(몸 안쪽)을 배경색으로 채워요. */
@@ -5191,7 +5290,7 @@ function openStripHtml() {
   const D = S.ed.D; let mode = 'block';
   const all = () => textPaths(D).filter(([p, v]) => p !== 'name' && v && hasDeco(v));
   const compute = () => all().map(([p, v]) => ({ path: p, text: v, out: mode === 'block' ? removeHtmlBlocks(v) : stripTagsOnly(v) })).filter((x) => x.out !== x.text);
-  if (!all().length) return toast('지울 HTML 꾸미기가 없어요');
+  if (!all().length) return toast('정리할 HTML이 없어요');
   let items = compute();
   const note = {
     block: '<b>꾸민 부분 통째로</b>: &lt;div style=…&gt;처럼 꾸미기가 시작된 곳부터 끝나는 곳까지, 안에 든 글·강조·줄바꿈을 모두 지워요. 끝이 잘려 닫히지 않은 꾸미기는 글 끝까지 지워요. 꾸미기 밖에 따로 있는 &lt;b&gt;·&lt;br&gt; 같은 단순 강조와 줄바꿈은 글로 남겨요.',
@@ -5200,7 +5299,7 @@ function openStripHtml() {
   const body = () => `<div class="seg full" data-sm>${[['block', '꾸민 부분 통째로'], ['tags', '태그만 지우기']].map(([k, l]) => `<button class="${mode === k ? 'on' : ''}" data-v="${k}">${l}</button>`).join('')}</div>
     <p class="note">${note[mode]}</p>
     ${items.length ? items.map((x, i) => `<div class="gx-item"><label class="ck big"><input type="checkbox" data-si="${i}" checked>${esc(pathLabel(x.path))}</label><div class="gx-text">${opsPreviewHTML(x.text, diffOps(x.text, x.out))}</div></div>`).join('') : '<p class="hint">이 방식으로는 바뀌는 곳이 없어요.</p>'}`;
-  const m = openModal({ title: 'HTML 꾸미기 지우기', wide: true, body: `<div data-sb style="display:flex;flex-direction:column;gap:14px">${body()}</div>`, foot: `<button class="btn primary" data-ok>${icon('check')} 지우기</button>` });
+  const m = openModal({ title: 'HTML 정리', wide: true, body: `<div data-sb style="display:flex;flex-direction:column;gap:14px">${body()}</div>`, foot: `<button class="btn primary" data-ok>${icon('check')} 지우기</button>` });
   m.el.addEventListener('click', (ev) => { const b = ev.target.closest('[data-sm] button'); if (!b) return; mode = b.dataset.v; items = compute(); m.el.querySelector('[data-sb]').innerHTML = body(); });
   m.el.querySelector('[data-ok]').onclick = () => {
     let n = 0;
@@ -5209,7 +5308,7 @@ function openStripHtml() {
       setPath(D, x.path, x.out); n++;
       const ta = frTAs().find((t) => t.dataset.path === x.path); if (ta) { ta.value = x.out; onTAInput(ta); }
     });
-    m.close(); if (!n) return; markDirty(); toast(`${n}칸에서 HTML 꾸미기를 지웠어요. 저장을 눌러야 보관돼요`);
+    m.close(); if (!n) return; markDirty(); toast(`${n}칸의 HTML을 정리했어요. 저장을 눌러야 보관돼요`);
   };
 }
 
@@ -6389,7 +6488,7 @@ document.addEventListener('input', (ev) => {
 document.addEventListener('change', (ev) => {
   const L = S.loreEdit; const t = ev.target; if (!L || t.dataset.lselE == null) return;
   t.checked ? L.sel.add(+t.dataset.lselE) : L.sel.delete(+t.dataset.lselE);
-  const tools = t.closest('section').querySelector('.pk-tools'); if (tools) { tools.querySelector('.hint').textContent = L.sel.size ? `${L.sel.size}개 고름` : '항목을 고르면 한 번에 지울 수 있어요'; tools.querySelector('[data-act="leDelSel"]').disabled = !L.sel.size; }
+  const tools = t.closest('section')?.querySelector('.pk-tools'); if (tools) { tools.querySelector('.hint').textContent = L.sel.size ? `${L.sel.size}개 고름` : '항목을 고르면 한 번에 지울 수 있어요'; tools.querySelector('[data-act="leDelSel"]').disabled = !L.sel.size; }
 });
 Object.assign(ACT, {
   leStart: (el) => { const e = S.byId.get(el.dataset.id); S.loreEdit = { id: e.id, items: loreItemsOf(e).map((x) => ({ ...x, keys: [...x.keys] })), sel: new Set(), dirty: false }; viewNaiItem(e); },
@@ -6785,7 +6884,7 @@ const _runDraw19 = runDraw;
 runDraw = async function () { await _runDraw19(); $$('#stage .dcard.flip').forEach((d) => d.classList.add('done')); };
 
 /* ================= v20 ================= */
-const APP_VERSION = 'v29';
+const APP_VERSION = 'v34';
 Object.assign(IC, { save: '<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/>' });
 
 /* 브라우저가 저장 공간이 모자랄 때 카드 데이터를 지우지 않게 (지원하는 곳에서만) */
@@ -7396,7 +7495,7 @@ function edTokTotal() {
   const head = $('#ed-card > .sec-h'); if (!head) return;
   let t = head.querySelector('.tok-sum');
   if (!t) { head.querySelector('h3')?.insertAdjacentHTML('afterend', `<span class="tok tok-sum" title="${TOK_TIP}"></span>`); t = head.querySelector('.tok-sum'); }
-  if (t) t.textContent = sum ? `전체 ≈${tokFmt(sum)} 토큰` : '';
+  if (t) { t.textContent = sum ? `≈${tokFmt(sum)} 토큰` : ''; t.title = '카드 전체 토큰 수 어림값이에요. 모델마다 조금씩 달라요'; }
 }
 function edTokAll() { $$('.page.edit .tok[data-tokp]').forEach((t) => edTokUpdate(t.dataset.tokp)); edTokTotal(); }
 const _initEditor25 = initEditor;
@@ -7603,6 +7702,437 @@ async function goTab(tab, target) {
     if ((location.hash || '#/') !== root) replaceHash(root); else onHash();
   } else { S.hstack = [root]; location.hash = target; }
 }
+
+/* ================= v30 ================= */
+
+/* ---------- 고르기 창: 폴더로 골라 보기 (기존 카드 묶기·페르소나 연결·짝꿍 고정 등 모두) ---------- */
+openPicker = function ({ title, kind, exclude = [], selected = [], onDone, single = false }) {
+  const cands = S.entries.filter((x) => (!kind || x.kind === kind) && !exclude.includes(x.id)).sort((a, b) => entryName(a).localeCompare(entryName(b), 'ko'));
+  const sel = new Set(single ? selected.slice(-1) : selected);
+  const folders = (S.settings.folders || []).filter((f) => cands.some((x) => (x.folders || []).includes(f.id)));
+  const m = openModal({ title, body: `<div class="pick-top"><label class="search neu-in">${icon('search')}<input placeholder="이름으로 찾기" data-pq></label>
+      ${folders.length ? `<select class="sel sm" data-pf aria-label="폴더"><option value="">모든 폴더</option>${folders.map((f) => `<option value="${f.id}">${esc(f.name)}</option>`).join('')}</select>` : ''}</div>
+    ${single ? '<p class="note">하나만 고를 수 있어요.</p>' : ''}
+    <div class="pick-list ${single ? 'single' : ''}">${cands.length ? cands.map((x) => `<button class="pick-item ${sel.has(x.id) ? 'on' : ''}" data-pid="${x.id}">${miniAva(x)}<span class="nm">${esc(entryName(x))}</span><span class="ck-mark">${icon('check')}</span></button>`).join('') : '<p class="hint">고를 수 있는 카드가 없어요.</p>'}</div>`,
+    foot: `<button class="btn primary" data-done>${icon('check')} 완료</button>` });
+  const filt = () => {
+    const q = (m.el.querySelector('[data-pq]').value || '').toLowerCase(); const fid = m.el.querySelector('[data-pf]')?.value || '';
+    $$('[data-pid]', m.el).forEach((b) => { const x = S.byId.get(b.dataset.pid); b.style.display = entryName(x).toLowerCase().includes(q) && (!fid || (x.folders || []).includes(fid)) ? '' : 'none'; });
+  };
+  m.el.querySelector('[data-pq]').oninput = filt; const pf = m.el.querySelector('[data-pf]'); if (pf) pf.onchange = filt;
+  m.el.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-pid]');
+    if (b) {
+      const id = b.dataset.pid;
+      if (single) { const was = sel.has(id); sel.clear(); if (!was) sel.add(id); $$('[data-pid]', m.el).forEach((x) => x.classList.toggle('on', sel.has(x.dataset.pid))); }
+      else { sel.has(id) ? sel.delete(id) : sel.add(id); b.classList.toggle('on', sel.has(id)); }
+      return;
+    }
+    if (ev.target.closest('[data-done]')) { m.close(); onDone([...sel]); }
+  });
+};
+
+/* ---------- 월드인포: 실리태번 파일과 똑같은 모양으로 저장 (새 항목도 실리태번 기본값을 모두 채워서) ---------- */
+const _lorePut30 = lorePut;
+lorePut = async function (e, items) {
+  if (loreSrcOf(e) !== 'st') return _lorePut30(e, items);
+  e.data.character_book = { ...(e.data.character_book || {}), entries: items.map(loreStEntry) };
+  const out = {}; items.forEach((it, i) => { out[i] = wiEntry(it, i); });
+  e.stLore = { ...(e.stLore || {}), entries: out };
+  await Store.save(e);
+};
+
+/* ---------- 로어북 / 월드인포 모아보기: 번역하기 · 번역/원문 보기 ---------- */
+const lorePath = (e, i) => (loreSrcOf(e) === 'scn' ? `naiScn.lorebook.${i}` : `character_book.entries.${i}.content`);
+function loreTrOf(e, i, text) { const t = e.tr?.[lorePath(e, i)]; return t && text && trHashOk(t.h, text) ? t.t : null; }
+async function translateLoreBook(id) {
+  const e = S.byId.get(id); if (!e) return;
+  if (S.settings.tr.engine === 'llm' && !aiReady()) return toast('설정에서 AI 키와 모델을 먼저 넣어 주세요', { err: true });
+  e.tr = e.tr || {};
+  const todo = loreItemsOf(e).map((x, i) => ({ path: lorePath(e, i), text: x.text })).filter((t) => t.text.trim() && !loreTrOf(e, +t.path.match(/\d+/)[0], t.text));
+  if (!todo.length) { S.ui.ko = true; viewLore(); return toast('이미 모두 번역돼 있어요'); }
+  const pp = progressPop('로어북 번역하는 중'); let done = 0, fail = 0;
+  await pool(todo, S.settings.tr.engine === 'llm' ? 2 : 3, async (t) => {
+    try { const out = await translateText(t.text); e.tr[t.path] = { h: fnv(t.text), t: out, at: Date.now(), by: engineLabel() }; } catch (err) { fail++; console.warn(err); }
+    done++; pp.set(`${done}/${todo.length}`, done / todo.length);
+  });
+  await Store.save(e); pp.close(); S.ui.ko = true;
+  toast(fail ? `${todo.length - fail}개를 번역했어요. ${fail}개는 실패했어요` : `항목 ${todo.length}개를 번역했어요`, fail ? { err: true } : {});
+  viewLore();
+}
+const _viewLore30 = viewLore;
+viewLore = function () {
+  _viewLore30();
+  const page = $('.lore-page'); if (!page) return;
+  page.querySelector('.topbar')?.insertAdjacentHTML('beforeend', `<div class="tb-actions"><button class="btn sm ${S.ui.ko ? 'on' : ''}" data-act="loreKo" title="번역/원문 바꿔 보기">${icon('translate')} ${S.ui.ko ? '번역' : '원문'}</button></div>`);
+  $$('.lore-book', page).forEach((sec) => {
+    const e = S.byId.get(sec.dataset.bid); if (!e) return;
+    sec.querySelector('[data-act="loreEditBook"]')?.insertAdjacentHTML('beforebegin', `<button class="btn icon sm ghost" data-act="loreTr" data-id="${e.id}" aria-label="이 로어북 번역하기" title="이 로어북 번역하기">${icon('translate')}</button>`);
+    const items = loreItemsOf(e);
+    sec.querySelectorAll('details.lr-d').forEach((d) => {
+      const i = +d.dataset.ok.split('|')[1]; const x = items[i]; if (!x) return;
+      const full = d.querySelector('.lr-full'); if (!full) return;
+      const tr = S.ui.ko ? loreTrOf(e, i, x.text) : null;
+      full.textContent = (tr ?? x.text).replace(/^\s+/, '') || '';
+      if (!full.textContent) full.innerHTML = '<span class="hint">내용 없음</span>';
+      if (tr) d.querySelector('summary')?.insertAdjacentHTML('beforeend', '<span class="lflag tr">번역</span>');
+    });
+  });
+};
+Object.assign(ACT, {
+  loreTr: (el) => translateLoreBook(el.dataset.id),
+  loreKo: () => { S.ui.ko = !S.ui.ko; viewLore(); },
+});
+
+/* ---------- 로어북 편집: 항목마다 접고 펴기, 체크박스·버튼 모양 통일 ---------- */
+loreEditHTML = function (L) {
+  L.open = L.open || new Set();
+  const short = (s) => esc(String(s || '').replace(/\s+/g, ' ').trim().slice(0, 60));
+  return `<div class="le-tools"><span class="hint">${L.sel.size ? `${L.sel.size}개 고름` : `항목 ${L.items.length}개 · 고르면 한 번에 지울 수 있어요`}</span>
+      <button class="btn icon sm" data-act="leAdd" aria-label="항목 추가" title="항목 추가">${icon('plus')}</button>
+      <button class="btn icon sm" data-act="leDelSel" ${L.sel.size ? '' : 'disabled'} aria-label="고른 항목 지우기" title="고른 항목 지우기">${icon('trash')}</button></div>
+    <div class="nai-ents le-list">${L.items.map((x, i) => { const open = L.open.has(i); return `<div class="nai-ent le-ent ${x.enabled ? '' : 'off'} ${open ? 'open' : ''}" data-li="${i}">
+      <div class="le-h"><label class="ck"><input type="checkbox" data-lsel-e="${i}" ${L.sel.has(i) ? 'checked' : ''} aria-label="고르기"></label>
+        <input class="inp nai-in" data-le="name" value="${esc(x.name)}" placeholder="항목 이름">
+        <button class="btn icon sm ghost" data-act="leToggle" data-i="${i}" aria-label="${open ? '접기' : '펼치기'}" title="${open ? '접기' : '펼치기'}">${icon(open ? 'up' : 'chevDown')}</button></div>
+      ${open ? `<div class="le-b"><div class="nai-ent-o"><label class="ck"><input type="checkbox" data-le="enabled" ${x.enabled ? 'checked' : ''}>켜짐</label><label class="ck"><input type="checkbox" data-le="force" ${x.force ? 'checked' : ''}>항상 켜짐</label></div>
+        <input class="inp nai-in nai-keys" data-le="keys" value="${esc(x.keys.join(', '))}" placeholder="키워드 (쉼표로 구분)">
+        <textarea class="inp nai-ta" data-le="text" rows="${naiRows(x.text)}" spellcheck="false">${esc(x.text)}</textarea></div>`
+        : `<button class="le-sum" data-act="leToggle" data-i="${i}">${x.force ? '<span class="lflag on">항상</span>' : ''}${x.enabled ? '' : '<span class="lflag">꺼짐</span>'}<span>${short(x.keys.join(', ')) || '<i>키워드 없음</i>'}</span><span class="le-s2">${short(x.text) || '내용 없음'}</span></button>`}
+    </div>`; }).join('') || '<p class="hint">항목이 없어요</p>'}</div>`;
+};
+Object.assign(ACT, {
+  leToggle: (el) => { const L = S.loreEdit; if (!L) return; const i = +el.dataset.i; L.open.has(i) ? L.open.delete(i) : L.open.add(i); leRender(); },
+  leAdd: () => { const L = S.loreEdit; if (!L) return; L.items.push({ name: '새 항목', keys: [], text: '', enabled: true, force: false }); L.open = L.open || new Set(); L.open.add(L.items.length - 1); L.dirty = true; leRender();
+    requestAnimationFrame(() => { const last = $$('.le-ent').pop(); last?.scrollIntoView({ block: 'center', behavior: 'smooth' }); }); },
+  leDelSel: async () => {
+    const L = S.loreEdit; if (!L?.sel.size) return;
+    if (!(await confirmDlg(`고른 항목 ${L.sel.size}개를 지울까요? 저장을 눌러야 실제로 지워져요.`, { ok: '지우기', danger: true }))) return;
+    L.items = L.items.filter((_, i) => !L.sel.has(i)); L.sel.clear(); L.open = new Set(); L.dirty = true; leRender();
+  },
+});
+/* 고르기 체크박스: 편집 창(모달)에서도 도구줄이 바로 바뀌게 */
+document.addEventListener('change', (ev) => {
+  const L = S.loreEdit; const t = ev.target; if (!L || t.dataset?.lselE == null) return;
+  const box = t.closest('.lem, section'); const tools = box?.querySelector('.le-tools'); if (!tools) return;
+  tools.querySelector('.hint').textContent = L.sel.size ? `${L.sel.size}개 고름` : `항목 ${L.items.length}개 · 고르면 한 번에 지울 수 있어요`;
+  tools.querySelector('[data-act="leDelSel"]').disabled = !L.sel.size;
+});
+
+/* ================= v31 ================= */
+
+/* ---------- 로어북 / 월드인포 모아보기: 검색어 형광펜 ---------- */
+const qHL = (text, q) => { const t = String(text || ''); if (!q) return esc(t); const lo = t.toLowerCase(), ql = q.toLowerCase(); let out = '', i = 0, j;
+  while ((j = lo.indexOf(ql, i)) >= 0) { out += esc(t.slice(i, j)) + `<mark class="qhl">${esc(t.slice(j, j + q.length))}</mark>`; i = j + q.length; }
+  return out + esc(t.slice(i)); };
+const _viewLore31 = viewLore;
+viewLore = function () {
+  _viewLore31();
+  const q = (S.lore.q || '').trim(); if (!q) return;
+  $$('.lore-page .lb-title b, .lore-page .lr-n, .lore-page .lkeys .chip, .lore-page .lr-full').forEach((el) => { if (el.querySelector('.hint')) return; el.innerHTML = qHL(el.textContent, q); });
+};
+
+/* ---------- 고르기 창: 이름 찾기 옆에 태그·폴더 버튼 ---------- */
+openPicker = function ({ title, kind, exclude = [], selected = [], onDone, single = false }) {
+  const cands = S.entries.filter((x) => (!kind || x.kind === kind) && !exclude.includes(x.id)).sort((a, b) => entryName(a).localeCompare(entryName(b), 'ko'));
+  const sel = new Set(single ? selected.slice(-1) : selected);
+  const folders = (S.settings.folders || []).filter((f) => cands.some((x) => (x.folders || []).includes(f.id)));
+  const tags = [...new Set(cands.flatMap((x) => x.tags || []))].sort((a, b) => a.localeCompare(b, 'ko'));
+  const F = { fid: '', tag: '' };
+  const m = openModal({ title, body: `<div class="pick-top"><label class="search neu-in">${icon('search')}<input placeholder="이름으로 찾기" data-pq></label>
+      <button class="btn icon" data-ptag aria-label="태그로 찾기" title="태그로 찾기" ${tags.length ? '' : 'disabled'}>${icon('tag')}</button>
+      <button class="btn icon" data-pfold aria-label="폴더로 찾기" title="폴더로 찾기" ${folders.length ? '' : 'disabled'}>${icon('folder')}</button></div>
+    <div class="pick-f" hidden></div>
+    ${single ? '<p class="note">하나만 고를 수 있어요.</p>' : ''}
+    <div class="pick-list ${single ? 'single' : ''}">${cands.length ? cands.map((x) => `<button class="pick-item ${sel.has(x.id) ? 'on' : ''}" data-pid="${x.id}">${miniAva(x)}<span class="nm">${esc(entryName(x))}</span><span class="ck-mark">${icon('check')}</span></button>`).join('') : '<p class="hint">고를 수 있는 카드가 없어요.</p>'}</div>`,
+    foot: `<button class="btn primary" data-done>${icon('check')} 완료</button>` });
+  const filt = () => {
+    const q = (m.el.querySelector('[data-pq]').value || '').toLowerCase();
+    $$('[data-pid]', m.el).forEach((b) => { const x = S.byId.get(b.dataset.pid);
+      b.style.display = entryName(x).toLowerCase().includes(q) && (!F.fid || (x.folders || []).includes(F.fid)) && (!F.tag || (x.tags || []).includes(F.tag)) ? '' : 'none'; });
+    m.el.querySelector('[data-ptag]').classList.toggle('on', !!F.tag); m.el.querySelector('[data-pfold]').classList.toggle('on', !!F.fid);
+    const f = folders.find((x) => x.id === F.fid); const box = m.el.querySelector('.pick-f');
+    const parts = [f && `<button class="chip f sel" data-pclr="fid">${icon('folder')}${esc(f.name)} ✕</button>`, F.tag && `<button class="chip f sel" data-pclr="tag">${icon('tag')}${esc(F.tag)} ✕</button>`].filter(Boolean);
+    box.hidden = !parts.length; box.innerHTML = parts.join('');
+  };
+  m.el.querySelector('[data-pq]').oninput = filt;
+  m.el.addEventListener('click', (ev) => {
+    const tb = ev.target.closest('[data-ptag]'), fb = ev.target.closest('[data-pfold]'), clr = ev.target.closest('[data-pclr]');
+    if (tb) return popMenu(tb, [['', '모든 태그', 'tag'], ...tags.map((t) => [t, esc(t)])], F.tag, (v) => { F.tag = v; filt(); });
+    if (fb) return popMenu(fb, [['', '모든 폴더', 'folder'], ...folders.map((f) => [f.id, esc(f.name)])], F.fid, (v) => { F.fid = v; filt(); });
+    if (clr) { F[clr.dataset.pclr] = ''; return filt(); }
+    const b = ev.target.closest('[data-pid]');
+    if (b) {
+      const id = b.dataset.pid;
+      if (single) { const was = sel.has(id); sel.clear(); if (!was) sel.add(id); $$('[data-pid]', m.el).forEach((x) => x.classList.toggle('on', sel.has(x.dataset.pid))); }
+      else { sel.has(id) ? sel.delete(id) : sel.add(id); b.classList.toggle('on', sel.has(id)); }
+      return;
+    }
+    if (ev.target.closest('[data-done]')) { m.close(); onDone([...sel]); }
+  });
+};
+
+/* ---------- 실리태번 월드인포: 실리태번 편집 화면과 같은 항목으로 보고 고치기 ---------- */
+const ST_POS = [[0, '캐릭터 설명 앞', '↑Char'], [1, '캐릭터 설명 뒤', '↓Char'], [2, '작가 노트 위', '↑AN'], [3, '작가 노트 아래', '↓AN'], [4, '정해진 깊이', '@D'], [5, '대화 예시 앞', '↑EM'], [6, '대화 예시 뒤', '↓EM']];
+const ST_LOGIC = [[0, '하나라도 있으면', 'AND ANY'], [1, '모두 있지는 않으면', 'NOT ALL'], [2, '하나도 없으면', 'NOT ANY'], [3, '모두 있으면', 'AND ALL']];
+const ST_ROLE = [[0, '시스템', 'System'], [1, '사용자', 'User'], [2, '어시스턴트', 'Assistant']];
+const tri = (v) => (v === true ? 'true' : v === false ? 'false' : '');
+function stPrep(L, e) {
+  if (loreSrcOf(e) !== 'st') return; L.st = true;
+  L.items.forEach((x, i) => { if (!x.st) x.st = clone(wiEntry(x, i)); });
+}
+const _openLoreEditModal31 = openLoreEditModal;
+openLoreEditModal = function (id) { _openLoreEditModal31(id); const L = S.loreEdit; const e = S.byId.get(id); if (L && e && loreSrcOf(e) === 'st') { stPrep(L, e); leRender(); } };
+const _leStart31 = ACT.leStart;
+if (_leStart31) ACT.leStart = (el) => { _leStart31(el); const L = S.loreEdit; const e = L && S.byId.get(L.id); if (e && loreSrcOf(e) === 'st') { stPrep(L, e); leRender(); } };
+const _leAdd31 = ACT.leAdd;
+ACT.leAdd = (el) => { _leAdd31(el); const L = S.loreEdit; if (L?.st) { const i = L.items.length - 1; L.items[i].st = clone(wiEntry(L.items[i], i)); leRender(); } };
+
+const opt = (list, cur) => list.map(([v, l, en]) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''} ${en ? `title="${en}"` : ''}>${en && /^[↑↓@]/.test(en) ? en + ' ' : ''}${l}</option>`).join('');   // 영어 이름은 칸 제목 아래에 있어서, 고르기 상자엔 한국어만 (위치는 실리태번 약어를 앞에)
+function stBodyHTML(x, i) {
+  const s = x.st; const strat = s.constant ? 'constant' : s.vectorized ? 'vectorized' : 'normal';
+  const num = (k, lab, en, extra = '') => `<label class="stf">${lab}<small>${en}</small><input class="inp" type="number" data-st="${k}" value="${s[k] ?? ''}" ${extra}></label>`;
+  return `<div class="le-b st-b">
+    <label class="ck"><input type="checkbox" data-le="enabled" ${x.enabled ? 'checked' : ''}>켜짐</label>
+    <div class="st-grid">
+      <label class="stf">전략<small>Strategy</small><select class="sel" data-st="strategy">${opt([['constant', '🔵 상시 켜짐', 'Constant'], ['normal', '🟢 키워드로 켜짐', 'Normal'], ['vectorized', '🔗 벡터 검색', 'Vectorized']], strat)}</select></label>
+      <label class="stf">위치<small>Position</small><select class="sel" data-st="position">${opt(ST_POS, s.position ?? 0)}</select></label>
+      ${+s.position === 4 ? `${num('depth', '깊이', 'Depth', 'min="0"')}<label class="stf">역할<small>Role</small><select class="sel" data-st="role">${opt(ST_ROLE, s.role ?? 0)}</select></label>` : ''}
+      ${num('order', '순서', 'Order')}
+      ${num('probability', '켜질 확률 %', 'Trigger %', 'min="0" max="100"')}
+    </div>
+    <label class="stf wide">기본 키워드<small>Primary Keywords · 쉼표로 구분</small><input class="inp" data-le="keys" value="${esc(x.keys.join(', '))}"></label>
+    <div class="st-grid">
+      <label class="stf">선택 논리<small>Logic</small><select class="sel" data-st="selectiveLogic">${opt(ST_LOGIC, s.selectiveLogic ?? 0)}</select></label>
+      <label class="stf grow">보조 키워드<small>Optional Filter · 쉼표로 구분</small><input class="inp" data-st="keysecondary" value="${esc((s.keysecondary || []).join(', '))}"></label>
+    </div>
+    <label class="stf wide">내용<small>Content</small><textarea class="inp nai-ta" data-le="text" rows="${naiRows(x.text)}" spellcheck="false">${esc(x.text)}</textarea></label>
+    <details class="st-adv"><summary>고급 설정</summary><div class="st-grid">
+      <label class="stf">포함 그룹<small>Inclusion Group</small><input class="inp" data-st="group" value="${esc(s.group || '')}"></label>
+      ${num('groupWeight', '그룹 가중치', 'Group Weight')}
+      ${num('scanDepth', '스캔 깊이', 'Scan Depth · 비우면 전역 설정')}
+      <label class="stf">대소문자 구분<small>Case-Sensitive</small><select class="sel" data-st="caseSensitive">${opt([['', '전역 설정 따름'], ['true', '구분해요'], ['false', '구분 안 해요']], tri(s.caseSensitive))}</select></label>
+      <label class="stf">단어 단위로 찾기<small>Whole Words</small><select class="sel" data-st="matchWholeWords">${opt([['', '전역 설정 따름'], ['true', '예'], ['false', '아니요']], tri(s.matchWholeWords))}</select></label>
+      ${num('sticky', '유지', 'Sticky')}${num('cooldown', '쉬는 턴', 'Cooldown')}${num('delay', '지연', 'Delay')}
+    </div><div class="st-flags">
+      <label class="ck"><input type="checkbox" data-st="excludeRecursion" ${s.excludeRecursion ? 'checked' : ''}>재귀로는 안 켜짐 <small>Non-recursable</small></label>
+      <label class="ck"><input type="checkbox" data-st="preventRecursion" ${s.preventRecursion ? 'checked' : ''}>다른 항목을 켜지 않음 <small>Prevent recursion</small></label>
+      <label class="ck"><input type="checkbox" data-st="delayUntilRecursion" ${s.delayUntilRecursion ? 'checked' : ''}>재귀 때만 켜짐 <small>Delay until recursion</small></label>
+    </div></details>
+  </div>`;
+}
+const _loreEditHTML31 = loreEditHTML;
+loreEditHTML = function (L) {
+  const html = _loreEditHTML31(L); if (!L.st) return html;
+  const d = document.createElement('div'); d.innerHTML = html;
+  d.querySelectorAll('.le-ent').forEach((ent) => {
+    const i = +ent.dataset.li; const x = L.items[i]; if (!x?.st) return;
+    const b = ent.querySelector('.le-b'); const sum = ent.querySelector('.le-sum');
+    if (b) b.outerHTML = stBodyHTML(x, i);
+    if (sum) { const s = x.st; const strat = s.constant ? '🔵' : s.vectorized ? '🔗' : '🟢'; const pos = ST_POS.find(([v]) => v === +s.position)?.[2] || '';
+      sum.insertAdjacentHTML('afterbegin', `<span class="st-tag">${strat} ${pos}${+s.position === 4 ? ' ' + (s.depth ?? 4) : ''} · 순서 ${s.order ?? 100}</span>`); }
+  });
+  return d.innerHTML;
+};
+const stVal = (k, el) => {
+  if (el.type === 'checkbox') return el.checked;
+  const v = el.value;
+  if (k === 'keysecondary') return v.split(/[,，]/).map((t) => t.trim()).filter(Boolean);
+  if (k === 'caseSensitive' || k === 'matchWholeWords') return v === '' ? null : v === 'true';
+  if (k === 'group') return v;
+  if (['position', 'selectiveLogic', 'role', 'depth', 'order', 'probability', 'groupWeight', 'sticky', 'cooldown', 'delay'].includes(k)) return v === '' ? 0 : Number(v);
+  if (k === 'scanDepth') return v === '' ? null : Number(v);
+  return v;
+};
+const stOnEdit = (ev) => {
+  const t = ev.target; const k = t.dataset?.st; const L = S.loreEdit; if (!k || !L?.st) return;
+  const i = +t.closest('[data-li]')?.dataset.li; const x = L.items[i]; if (!x?.st) return;
+  if (k === 'strategy') { x.st.constant = t.value === 'constant'; x.st.vectorized = t.value === 'vectorized'; x.force = x.st.constant; }
+  else x.st[k] = stVal(k, t);
+  if (k === 'probability') x.st.useProbability = true;
+  L.dirty = true;
+  if (ev.type === 'change' && (k === 'position' || k === 'strategy')) leRender();   // 깊이 칸 보이기/숨기기, 요약 갱신
+};
+document.addEventListener('input', stOnEdit); document.addEventListener('change', stOnEdit);
+/* 켜짐·상시 상태를 실리태번 칸과 맞추고, 실리태번 칸을 그대로 저장 */
+const _lorePut31 = lorePut;
+lorePut = async function (e, items) {
+  if (loreSrcOf(e) !== 'st') return _lorePut31(e, items);
+  e.data.character_book = { ...(e.data.character_book || {}), entries: items.map(loreStEntry) };
+  const out = {};
+  items.forEach((it, i) => { const base = wiEntry(it, i); out[i] = { ...base, ...(it.st || {}), uid: i, key: [...it.keys], comment: it.name || '', content: it.text || '', constant: it.st ? !!it.st.constant : !!it.force, disable: !it.enabled, displayIndex: i }; });
+  e.stLore = { ...(e.stLore || {}), entries: out };
+  await Store.save(e);
+};
+
+/* ---------- PC 왼쪽 메뉴: 페르소나 밑에 로어북 ---------- */
+TAB_ROOT.lore = TAB_ROOT.lore || '#/lore';
+function sideLore() {
+  const side = $('#side'); if (!side) return;
+  const per = side.querySelector('[data-nav="persona"]'); if (!per) return;
+  let a = side.querySelector('[data-nav="lore"]');
+  if (!a) { per.insertAdjacentHTML('afterend', `<a href="#/lore" data-nav="lore">${icon('book')}<span>로어북 / 월드인포</span></a>`); a = side.querySelector('[data-nav="lore"]'); }
+  const cnt = per.lastElementChild && per.lastElementChild.tagName !== 'SPAN' ? per.lastElementChild : per.querySelector('small, .cnt, .n, b');   // 다른 메뉴와 같은 모양의 개수
+  if (cnt && cnt !== per.querySelector('span')) { let c = a.querySelector('[data-lcnt]'); if (!c) { c = cnt.cloneNode(false); c.setAttribute('data-lcnt', ''); a.appendChild(c); } try { c.textContent = loreBooks().length; } catch {} }
+}
+const _render31 = render;
+render = function () {
+  const r = _render31(); sideLore();
+  const onLore = parseRoute(location.hash || '#/').v === 'lore';
+  $$('#side [data-nav]').forEach((a) => { if (a.dataset.nav === 'lore') a.classList.toggle('on', onLore); else if (onLore) a.classList.remove('on'); });
+  return r;
+};
+
+/* ================= v32 ================= */
+
+/* ---------- 상세보기 › 편집: 실리태번 월드인포는 실리태번 편집 칸으로 ---------- */
+const _viewEdit32 = viewEdit;
+viewEdit = function (r) {
+  const e = S.byId.get(r.id);
+  if (!e || e.kind !== 'lorebook' || loreSrcOf(e) !== 'st') return _viewEdit32(r);
+  let L = S.drafts[e.id]?.wiL;
+  if (!L || L.id !== e.id) { L = { id: e.id, items: loreItemsOf(e).map((x) => ({ ...x, keys: [...x.keys] })), sel: new Set(), dirty: false, page: true, name: entryName(e), open: new Set() }; stPrep(L, e); }
+  delete S.drafts[e.id];
+  S.loreEdit = L; S.ed = { id: e.id, get dirty() { return L.dirty; }, set dirty(v) { L.dirty = v; }, wiL: L };
+  main.innerHTML = `<div class="page edit wi-edit">
+    <header class="topbar sticky"><button class="btn icon" data-act="back" aria-label="뒤로">${icon('back')}</button><h1 class="tb-title">월드인포 편집<small>${esc(L.name)}</small></h1>
+      <div class="tb-actions"><button class="btn primary" data-act="wiSave">${icon('check')} 저장</button></div></header>
+    <section class="esec neu"><label class="stf wide">월드인포 이름<small>파일 이름</small><input class="inp" data-wi-name value="${esc(L.name)}"></label></section>
+    <section class="esec neu"><div class="sec-h"><h3>항목</h3></div><div data-lem class="lem"></div></section>
+  </div>`;
+  leRender();
+};
+const _leRender32 = leRender;
+leRender = function () {
+  const L = S.loreEdit; if (!L) return;
+  if (L.page) { const box = $('.wi-edit [data-lem]'); if (box) box.innerHTML = loreEditHTML(L); return; }
+  return _leRender32();
+};
+document.addEventListener('input', (ev) => { if (ev.target.matches?.('[data-wi-name]') && S.loreEdit?.page) { S.loreEdit.name = ev.target.value; S.loreEdit.dirty = true; } });
+ACT.wiSave = async () => {
+  const L = S.loreEdit; if (!L?.page) return; const e = S.byId.get(L.id); if (!e) return;
+  const name = (L.name || '').trim() || entryName(e);
+  e.data.name = name; if (e.stLore && 'name' in e.stLore) e.stLore.name = name;
+  await lorePut(e, L.items);
+  L.dirty = false; S.ed = null; S.loreEdit = null;
+  toast('월드인포를 저장했어요');
+  if (histDepth() > 0) history.back(); else replaceHash('#/e/' + e.id);
+};
+
+/* 실리태번 월드인포 상세: 버튼 이름도 월드인포로 */
+const _viewNaiItem32 = viewNaiItem;
+viewNaiItem = function (e, ...a) {
+  const r = _viewNaiItem32(e, ...a);
+  if (e && loreSrcOf(e) === 'st') {
+    const s = $('[data-act="leStart"]'); if (s) s.innerHTML = s.innerHTML.replace('로어북 편집', '월드인포 편집');
+    const g = $('[data-act="naiItemGet"]'); if (g) g.innerHTML = g.innerHTML.replace(/실리태번 로어북 파일로 받기|실리태번 로어북으로 받기/, '월드인포 파일로 받기');
+  }
+  return r;
+};
+
+/* ================= v33 ================= */
+/* 캐릭터 카드 안 로어북도 실리태번 칸으로 보고 고치기.
+   실리태번은 카드 안 로어북의 설정을 항목마다 extensions 에 저장해요 (position·depth·probability 등).
+   여기서도 같은 자리에 읽고 써서, 카드를 실리태번으로 가져가면 그대로 이어져요. */
+const ST_KEYS = ['constant', 'vectorized', 'position', 'depth', 'role', 'order', 'probability', 'selectiveLogic', 'group', 'groupWeight', 'scanDepth', 'caseSensitive', 'matchWholeWords', 'sticky', 'cooldown', 'delay', 'excludeRecursion', 'preventRecursion', 'delayUntilRecursion', 'keysecondary'];
+function cardSt(en) {
+  const x = en.extensions || {};
+  return { constant: !!en.constant, vectorized: !!x.vectorized, position: x.position ?? (en.position === 'after_char' ? 1 : 0), depth: x.depth ?? 4, role: x.role ?? 0,
+    order: en.insertion_order ?? 100, probability: x.probability ?? 100, useProbability: x.useProbability ?? true, selectiveLogic: x.selectiveLogic ?? 0,
+    group: x.group || '', groupWeight: x.group_weight ?? 100, scanDepth: x.scan_depth ?? null, caseSensitive: x.case_sensitive ?? en.case_sensitive ?? null,
+    matchWholeWords: x.match_whole_words ?? null, sticky: x.sticky ?? 0, cooldown: x.cooldown ?? 0, delay: x.delay ?? 0,
+    excludeRecursion: !!x.exclude_recursion, preventRecursion: !!x.prevent_recursion, delayUntilRecursion: !!x.delay_until_recursion, keysecondary: [...(en.secondary_keys || [])] };
+}
+function cardStWrite(en, k, v) {
+  const x = (en.extensions = en.extensions || {});
+  switch (k) {
+    case 'constant': en.constant = !!v; break;
+    case 'vectorized': x.vectorized = !!v; break;
+    case 'position': x.position = v; en.position = v === 1 ? 'after_char' : 'before_char'; break;
+    case 'depth': x.depth = v; break;
+    case 'role': x.role = v; break;
+    case 'order': en.insertion_order = v; break;
+    case 'probability': x.probability = v; x.useProbability = true; break;
+    case 'selectiveLogic': x.selectiveLogic = v; en.selective = true; break;
+    case 'group': x.group = v; break;
+    case 'groupWeight': x.group_weight = v; break;
+    case 'scanDepth': x.scan_depth = v; break;
+    case 'caseSensitive': x.case_sensitive = v; break;
+    case 'matchWholeWords': x.match_whole_words = v; break;
+    case 'sticky': case 'cooldown': case 'delay': x[k] = v; break;
+    case 'excludeRecursion': x.exclude_recursion = !!v; break;
+    case 'preventRecursion': x.prevent_recursion = !!v; break;
+    case 'delayUntilRecursion': x.delay_until_recursion = !!v; break;
+    case 'keysecondary': en.secondary_keys = [...(v || [])]; break;
+  }
+}
+
+/* 모아보기 편집 창·그 자리 편집: 카드 로어북도 실리태번 칸 */
+const _stPrep33 = stPrep;
+stPrep = function (L, e) {
+  if (loreSrcOf(e) === 'card') { L.st = true; L.items.forEach((x) => { if (!x.st) x.st = cardSt(x._ref || {}); }); return; }
+  return _stPrep33(L, e);
+};
+const _openLoreEditModal33 = openLoreEditModal;
+openLoreEditModal = function (id) { _openLoreEditModal33(id); const L = S.loreEdit, e = S.byId.get(id); if (L && e && loreSrcOf(e) === 'card' && !L.st) { stPrep(L, e); leRender(); } };
+const _leStart33 = ACT.leStart;
+ACT.leStart = (el) => { _leStart33(el); const L = S.loreEdit, e = L && S.byId.get(L.id); if (e && loreSrcOf(e) === 'card' && !L.st) { stPrep(L, e); leRender(); } };
+const _lorePut33 = lorePut;
+lorePut = async function (e, items) {
+  await _lorePut33(e, items);
+  if (loreSrcOf(e) !== 'card' || !items.some((it) => it.st)) return;
+  const ents = e.data.character_book?.entries || [];
+  items.forEach((it, i) => { const en = ents[i]; if (!en || !it.st) return; for (const k of ST_KEYS) if (k in it.st) cardStWrite(en, k, it.st[k]); en.enabled = !!it.enabled; });
+  await Store.save(e);
+};
+
+/* 편집 화면(카드 내용 › 로어북): 항목마다 실리태번 칸 */
+function cardStBlockHTML(en) {
+  const s = cardSt(en); const strat = s.constant ? 'constant' : s.vectorized ? 'vectorized' : 'normal';
+  const num = (k, lab, sub, extra = '') => `<label class="stf">${lab}<small>${sub}</small><input class="inp" type="number" data-cst="${k}" value="${s[k] ?? ''}" ${extra}></label>`;
+  return `<div class="cst-h">실리태번 설정</div>
+    <div class="st-grid">
+      <label class="stf">전략<small>Strategy</small><select class="sel" data-cst="strategy">${opt([['constant', '🔵 상시 켜짐', 'Constant'], ['normal', '🟢 키워드로 켜짐', 'Normal'], ['vectorized', '🔗 벡터 검색', 'Vectorized']], strat)}</select></label>
+      <label class="stf">위치<small>Position</small><select class="sel" data-cst="position">${opt(ST_POS, s.position)}</select></label>
+      ${+s.position === 4 ? `${num('depth', '깊이', 'Depth', 'min="0"')}<label class="stf">역할<small>Role</small><select class="sel" data-cst="role">${opt(ST_ROLE, s.role)}</select></label>` : ''}
+      ${num('order', '순서', 'Order')}
+      ${num('probability', '켜질 확률 %', 'Trigger %', 'min="0" max="100"')}
+      <label class="stf">보조 키워드 논리<small>Logic</small><select class="sel" data-cst="selectiveLogic">${opt(ST_LOGIC, s.selectiveLogic)}</select></label>
+    </div>
+    <details class="st-adv"><summary>고급 설정</summary><div class="st-grid">
+      <label class="stf">포함 그룹<small>Inclusion Group</small><input class="inp" data-cst="group" value="${esc(s.group)}"></label>
+      ${num('groupWeight', '그룹 가중치', 'Group Weight')}
+      ${num('scanDepth', '스캔 깊이', 'Scan Depth · 비우면 전역 설정')}
+      <label class="stf">대소문자 구분<small>Case-Sensitive</small><select class="sel" data-cst="caseSensitive">${opt([['', '전역 설정 따름'], ['true', '구분해요'], ['false', '구분 안 해요']], tri(s.caseSensitive))}</select></label>
+      <label class="stf">단어 단위로 찾기<small>Whole Words</small><select class="sel" data-cst="matchWholeWords">${opt([['', '전역 설정 따름'], ['true', '예'], ['false', '아니요']], tri(s.matchWholeWords))}</select></label>
+      ${num('sticky', '유지', 'Sticky')}${num('cooldown', '쉬는 턴', 'Cooldown')}${num('delay', '지연', 'Delay')}
+    </div><div class="st-flags">
+      <label class="ck"><input type="checkbox" data-cst="excludeRecursion" ${s.excludeRecursion ? 'checked' : ''}>재귀로는 안 켜짐 <small>Non-recursable</small></label>
+      <label class="ck"><input type="checkbox" data-cst="preventRecursion" ${s.preventRecursion ? 'checked' : ''}>다른 항목을 켜지 않음 <small>Prevent recursion</small></label>
+      <label class="ck"><input type="checkbox" data-cst="delayUntilRecursion" ${s.delayUntilRecursion ? 'checked' : ''}>재귀 때만 켜짐 <small>Delay until recursion</small></label>
+    </div></details>`;
+}
+function injectCardSt() {
+  const book = S.ed?.D?.character_book; if (!book || !$('.page.edit')) return;
+  const e = S.byId.get(S.ed.id); if (e && ['nai', 'scn'].includes(loreSrcOf(e))) return;
+  $$('.page.edit details.lore-ed').forEach((d) => {
+    const body = d.querySelector('.lore-body'); if (!body || body.querySelector('.cst')) return;
+    const i = +d.dataset.i; const en = book.entries?.[i]; if (!en) return;
+    body.insertAdjacentHTML('beforeend', `<div class="cst" data-ci="${i}">${cardStBlockHTML(en)}</div>`);
+  });
+}
+let cstRaf = 0;
+new MutationObserver(() => { cancelAnimationFrame(cstRaf); cstRaf = requestAnimationFrame(injectCardSt); }).observe(document.getElementById('main') || document.body, { childList: true, subtree: true });
+const cstOnEdit = (ev) => {
+  const t = ev.target; const k = t.dataset?.cst; if (!k) return;
+  const book = S.ed?.D?.character_book; const box = t.closest('[data-ci]'); if (!book || !box) return;
+  const en = book.entries?.[+box.dataset.ci]; if (!en) return;
+  if (k === 'strategy') { cardStWrite(en, 'constant', t.value === 'constant'); cardStWrite(en, 'vectorized', t.value === 'vectorized'); }
+  else cardStWrite(en, k, stVal(k, t));
+  markDirty();
+  if (ev.type === 'change' && (k === 'position' || k === 'strategy')) box.innerHTML = cardStBlockHTML(en);
+};
+document.addEventListener('input', cstOnEdit); document.addEventListener('change', cstOnEdit);
 
 document.getElementById('dragCat').innerHTML = DD.catBox;
 </script>
