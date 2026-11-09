@@ -1,0 +1,13 @@
+{
+  "appId": "com.nyangchive.app",
+  "appName": "냥카이브",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
