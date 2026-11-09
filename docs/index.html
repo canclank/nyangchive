@@ -5322,7 +5322,7 @@ function genreBadges(e, short = false) {
 /* ================= 프로필 항목 (직접 정하기) ================= */
 function profileBox(e, mode = 'mini') {
   if (mode === 'full') return `<dl class="pgrid">${pfFields().map((f) => `<div><dt>${esc(f.label)}</dt><dd>${e.profile[f.k] ? esc(e.profile[f.k]) : '<span class="ph">—</span>'}</dd></div>`).join('')}</dl>`;
-  const skip = mode === 'mini' && (!e.profile.name || e.profile.name === e.data.name);
+  const skip = false; /* NAME 체크를 그대로 따라요 */
   const it = pfFields().filter((f) => f.list !== false && !(skip && f.k === 'name') && e.profile[f.k]);
   if (!it.length) return '<span class="ph">프로필 정보 없음</span>';
   return it.map((f) => `<span class="pi"><b>${esc(f.label)}</b>${esc(e.profile[f.k])}</span>`).join('');
