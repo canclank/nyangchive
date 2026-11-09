@@ -1,0 +1,138 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore: ['docs/**', '**.md']   # 웹페이지(docs)나 안내서만 고치면 APK는 다시 만들지 않아요
+  workflow_dispatch:
+  release:
+    types: [published]                   # 릴리즈를 발행하면 APK를 만들어 그 릴리즈에 붙여요
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 받기
+        uses: actions/checkout@v4
+
+      - name: 앱 폴더 찾기 (맨 위에 있든 nyangchive-apk 폴더 안에 있든)
+        run: |
+          if [ -f package.json ]; then d=.
+          else d=$(dirname "$(find . -maxdepth 3 -name capacitor.config.json -not -path '*/node_modules/*' | head -n 1)")
+          fi
+          if [ ! -f "$d/package.json" ]; then echo "package.json을 찾지 못했어요. 파일이 다 올라갔는지 확인해 주세요."; exit 1; fi
+          echo "APP_DIR=$d" >> "$GITHUB_ENV"
+          echo "앱 폴더: $d"
+
+      - name: Node.js 준비
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Java 준비 (Capacitor 7은 Java 21)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: 패키지 설치
+        working-directory: ${{ env.APP_DIR }}
+        run: npm install
+
+      - name: 안드로이드 프로젝트 만들기
+        working-directory: ${{ env.APP_DIR }}
+        run: npx cap add android
+
+      - name: 앱 버전 맞추기 (package.json의 version · 빌드 번호)
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          V=$(node -p "require('./package.json').version")
+          sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"$V\"/" android/app/build.gradle
+          grep -E "versionCode|versionName" android/app/build.gradle
+
+      - name: 앱 아이콘·시작 화면 만들기
+        continue-on-error: true
+        working-directory: ${{ env.APP_DIR }}
+        run: >
+          npx capacitor-assets generate --android
+          --iconBackgroundColor '#5e8c6f' --iconBackgroundColorDark '#5e8c6f'
+          --splashBackgroundColor '#e6ebe6' --splashBackgroundColorDark '#1d2220'
+
+      - name: 시작 화면 — 고양이가 늘어나지 않게 (단색 바탕 + 가운데 그림)
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          R=android/app/src/main/res
+          mkdir -p $R/drawable $R/drawable-nodpi $R/drawable-night-nodpi $R/values $R/values-night
+          cp assets/splash-logo.png $R/drawable-nodpi/nyan_splash_logo.png
+          cp assets/splash-logo-dark.png $R/drawable-night-nodpi/nyan_splash_logo.png
+          cp assets/splash-icon.png $R/drawable-nodpi/nyan_splash_icon.png   # 안드로이드 12+ 시작 화면 그림 (원 안에 수염까지)
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<resources><color name="nyan_splash_bg">#e6ebe6</color></resources>' > $R/values/nyan_splash.xml
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<resources><color name="nyan_splash_bg">#1d2220</color></resources>' > $R/values-night/nyan_splash.xml
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' \
+            '<layer-list xmlns:android="http://schemas.android.com/apk/res/android">' \
+            '  <item android:drawable="@color/nyan_splash_bg"/>' \
+            '  <item android:gravity="center"><bitmap android:src="@drawable/nyan_splash_logo" android:gravity="center"/></item>' \
+            '</layer-list>' > $R/drawable/nyan_splash_center.xml
+          S=$R/values/styles.xml
+          sed -i 's#@drawable/splash</item>#@drawable/nyan_splash_center</item>#g' $S
+          grep -q 'windowSplashScreenBackground' $S || sed -i 's#<item name="android:background">@drawable/nyan_splash_center</item>#<item name="android:background">@drawable/nyan_splash_center</item>\n        <item name="windowSplashScreenBackground">@color/nyan_splash_bg</item>#' $S
+          grep -q 'windowSplashScreenAnimatedIcon' $S || sed -i 's#<item name="android:background">@drawable/nyan_splash_center</item>#<item name="android:background">@drawable/nyan_splash_center</item>\n        <item name="windowSplashScreenAnimatedIcon">@drawable/nyan_splash_icon</item>#' $S
+          cat $S
+
+      - name: http:// 주소 허용 · 내 파일(Documents)에 저장 허용
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's/<application /<application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" /' $M
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />\n</manifest>#' $M
+          cat $M
+
+      - name: 웹 파일·플러그인 맞추기
+        working-directory: ${{ env.APP_DIR }}
+        run: npx cap sync android
+
+      - name: 고정 서명 키 쓰기 (새 APK를 지우지 않고 덮어 설치할 수 있게)
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: |
+          mkdir -p ~/.android
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > ~/.android/debug.keystore
+            echo "Secrets의 KEYSTORE_B64 키로 서명해요"
+          elif [ -f keystore/debug.keystore ]; then
+            cp keystore/debug.keystore ~/.android/debug.keystore
+            echo "저장소의 keystore 파일로 서명해요 (공개 저장소라면 Secrets로 옮기세요)"
+          else
+            echo "서명 키가 없어요. Secrets에 KEYSTORE_B64를 넣거나 keystore 폴더를 올려 주세요."; exit 1
+          fi
+
+      - name: APK 만들기
+        working-directory: ${{ env.APP_DIR }}/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: APK 이름 정하기 (nyangchive-버전.apk)
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          V=$(node -p "require('./package.json').version")
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/*.apk "dist/nyangchive-$V.apk"
+          ls -la dist
+
+      - name: APK 올리기 (Actions 결과물)
+        uses: actions/upload-artifact@v4
+        with:
+          name: nyangchive-apk
+          path: ${{ env.APP_DIR }}/dist/*.apk
+          if-no-files-found: error
+
+      - name: 릴리즈에 APK 붙이기
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.APP_DIR }}/dist/*.apk
